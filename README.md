@@ -40,5 +40,11 @@ rl.toString(); // Should be: "[1, 3) [19, 21)"
 The test is built on testing suite `Jest`.
 
 ```shell
-$ npm run test
+$ npm test
+```
+
+You can check the code coverage by adding coverage parameter:
+
+```shell
+$ npm test -- --coverage
 ```
