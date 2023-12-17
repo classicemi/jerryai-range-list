@@ -43,8 +43,10 @@ The test is built on testing suite `Jest`.
 $ npm test
 ```
 
-You can check the code coverage by adding coverage parameter:
+You can check the code coverage by adding coverage parameter or just using the `test:coverage` script:
 
 ```shell
 $ npm test -- --coverage
+# or
+$ npm run test:coverage
 ```

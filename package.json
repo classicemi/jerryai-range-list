@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test:coverage": "npm test -- --coverage"
   },
   "keywords": [],
   "author": "Shuang Wu <wushuang_1227@163.com>",
