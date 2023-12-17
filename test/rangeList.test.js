@@ -95,8 +95,8 @@ describe('range list', () => {
 
   test('merges multiple ranges if they can be merged', () => {
     rl.add([1, 5])
-    rl.add([10, 15])
     rl.add([20, 25])
+    rl.add([10, 15])
     rl.add([5, 30])
     expect(rl).toHaveProperty('ranges', [[1, 30]])
   })
