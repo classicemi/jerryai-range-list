@@ -10,6 +10,7 @@ const invalidRanges = [
   1,
   '1',
   [1],
+  [10, 10],
   [1, 5, 10],
   [5, 1],
   ['1', '5'],
@@ -66,31 +67,31 @@ describe('range list', () => {
   test('ignores invalid adding ranges', () => {
     invalidRanges.forEach(input => {
       rl.add(input)
-      expect(rl).toHaveProperty('ranges', [])
+      expect(rl.toString()).toBe('')
     })
   })
 
   test('adds valid separate ranges', () => {
     rl.add([1, 5])
-    expect(rl).toHaveProperty('ranges', [[1, 5]])
+    expect(rl.toString()).toBe('[1, 5)')
     rl.add([11, 15])
-    expect(rl).toHaveProperty('ranges', [[1, 5], [11, 15]])
+    expect(rl.toString()).toBe('[1, 5) [11, 15)')
   })
 
   test('merges ranges which have intersections', () => {
     rl.add([5, 10])
     rl.add([8, 15])
-    expect(rl).toHaveProperty('ranges', [[5, 15]])
+    expect(rl.toString()).toBe('[5, 15)')
     rl.add([1, 10])
-    expect(rl).toHaveProperty('ranges', [[1, 15]])
+    expect(rl.toString()).toBe('[1, 15)')
     rl.add([7, 10])
-    expect(rl).toHaveProperty('ranges', [[1, 15]])
+    expect(rl.toString()).toBe('[1, 15)')
     rl.add([0, 20])
-    expect(rl).toHaveProperty('ranges', [[0, 20]])
+    expect(rl.toString()).toBe('[0, 20)')
     rl.add([25, 30])
-    expect(rl).toHaveProperty('ranges', [[0, 20], [25, 30]])
+    expect(rl.toString()).toBe('[0, 20) [25, 30)')
     rl.add([10, 28])
-    expect(rl).toHaveProperty('ranges', [[0, 30]])
+    expect(rl.toString()).toBe('[0, 30)')
   })
 
   test('merges multiple ranges if they can be merged', () => {
@@ -98,22 +99,22 @@ describe('range list', () => {
     rl.add([20, 25])
     rl.add([10, 15])
     rl.add([5, 30])
-    expect(rl).toHaveProperty('ranges', [[1, 30]])
+    expect(rl.toString()).toBe('[1, 30)')
   })
 
   test('can subtract ranges from existing ranges', () => {
     rl.add([1, 10])
     rl.remove([0, 5])
-    expect(rl).toHaveProperty('ranges', [[5, 10]])
+    expect(rl.toString()).toBe('[5, 10)')
     rl.remove([8, 12])
-    expect(rl).toHaveProperty('ranges', [[5, 8]])
+    expect(rl.toString()).toBe('[5, 8)')
     rl.remove([1, 10])
-    expect(rl).toHaveProperty('ranges', [])
+    expect(rl.toString()).toBe('')
     rl.add([1, 10])
     rl.remove([5, 6])
-    expect(rl).toHaveProperty('ranges', [[1, 5], [6, 10]])
+    expect(rl.toString()).toBe('[1, 5) [6, 10)')
     rl.remove([3, 8])
-    expect(rl).toHaveProperty('ranges', [[1, 3], [8, 10]])
+    expect(rl.toString()).toBe('[1, 3) [8, 10)')
   })
 })
 
@@ -125,7 +126,7 @@ describe('example', () => {
   rl.add([10, 20])
   expect(rl.toString()).toBe('[1, 5) [10, 20)')
   rl.add([20, 20])
-  expect(rl.toString()).toBe('[1, 5) [10, 20)') // Should be: "[1, 5) [10, 20)"
+  expect(rl.toString()).toBe('[1, 5) [10, 20)')
   rl.add([20, 21])
   expect(rl.toString()).toBe('[1, 5) [10, 21)')
   rl.add([2, 4])
