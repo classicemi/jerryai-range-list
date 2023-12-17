@@ -1,0 +1,16 @@
+{
+  "name": "range-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+  },
+  "keywords": [],
+  "author": "Shuang Wu <wushuang_1227@163.com>",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
