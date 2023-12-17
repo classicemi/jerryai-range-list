@@ -1,33 +1,35 @@
-const RANGE_INPUT_ERROR_MSG = 'The parameter should be an array with exactly two increasing integers'
-
 /**
- * 
+ *
  * Check if a range input is valid
  * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
  * @returns {Boolean} isValid - Array of two integers that specify beginning and end of range.
  */
 export function validateRangeInput(range) {
-  return Array.isArray(range)
-    && range.length === 2
-    && range.every(item => Number.isInteger(item))
-    && range[1] > range[0]
+  return (
+    Array.isArray(range) &&
+    range.length === 2 &&
+    range.every((item) => Number.isInteger(item)) &&
+    range[1] > range[0]
+  )
 }
 
 /**
- * 
+ *
  * Check if two ranges have an intersection
  * @param {Array<number>} newRange - Range to be compared with an existing range
  * @param {Array<number>} oldRange - An existing range to be compared with a new range
  * @returns {Boolean} hasIntersection - An existing range to be compared with a new range
  */
 export function checkRangeIntersection(newRange, oldRange) {
-  return (newRange[0] >= oldRange[0] && newRange[0] <= oldRange[1])
-    || (newRange[1] >= oldRange[0] && newRange[1] <= oldRange[1])
-    || (newRange[0] < oldRange[0] && newRange[1] > oldRange[1])
+  return (
+    (newRange[0] >= oldRange[0] && newRange[0] <= oldRange[1]) ||
+    (newRange[1] >= oldRange[0] && newRange[1] <= oldRange[1]) ||
+    (newRange[0] < oldRange[0] && newRange[1] > oldRange[1])
+  )
 }
 
 /**
- * 
+ *
  * Merge two ranges and return the new range
  * @param {Array<number>} range1 - Range to be merged
  * @param {Array<number>} range2 - Range to be merged
@@ -41,7 +43,7 @@ export function mergeRanges(range1, range2) {
 }
 
 /**
- * 
+ *
  * @param {Array<number>} newRange - Range to be used to subtract the old range
  * @param {Array<number>} oldRange - Range to be operating subtract
  * @returns {Array<number>} - Result range
@@ -64,6 +66,7 @@ export function subtractRange(newRange, oldRange) {
     return []
   }
 
+  // update the old range
   if (oldRange[0] >= newRange[0] && oldRange[0] < newRange[1]) {
     return [[newRange[1], oldRange[1]]]
   }
@@ -77,7 +80,7 @@ export default class RangeList {
   }
 
   /**
-   * 
+   *
    * Adds a range to a list
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
@@ -115,17 +118,21 @@ export default class RangeList {
 
     // iterate `ranges` array to merge adjacent ranges if they can be merged
     if (insertIndex.length > 1) {
-      this.ranges.splice(insertIndex[0], insertIndex.length, insertIndex.reduce((acc, cur) => {
-        if (!acc.length) {
-          return this.ranges[cur]
-        }
-        return mergeRanges(this.ranges[cur], acc)
-      }, []))
+      this.ranges.splice(
+        insertIndex[0],
+        insertIndex.length,
+        insertIndex.reduce((acc, cur) => {
+          if (!acc.length) {
+            return this.ranges[cur]
+          }
+          return mergeRanges(this.ranges[cur], acc)
+        }, [])
+      )
     }
   }
 
   /**
-   * 
+   *
    * Removes a range from the list
    * @param {Array<number>} range - Array of two integers that specify beginning and end of range.
    */
@@ -147,15 +154,15 @@ export default class RangeList {
         }
       }
     }
-    this.ranges = this.ranges.filter(range => !!range.length)
+    this.ranges = this.ranges.filter((range) => !!range.length)
   }
 
   /**
-   * 
+   *
    * Convert the list of ranges in the range list to a string
    * @returns A string representation of the range list
    */
   toString() {
-    return this.ranges.map(range => `[${range[0]}, ${range[1]})`).join(' ')
+    return this.ranges.map((range) => `[${range[0]}, ${range[1]})`).join(' ')
   }
 }
